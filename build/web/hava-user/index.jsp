@@ -33,6 +33,28 @@
     <link rel="stylesheet" href="css/responsive.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/custom.css">
+    
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-analytics.js"></script>
+
+    <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyAEJ-yMYB6RY8wqisHbrmculO2K8NiTSCQ",
+        authDomain: "hava-recipe.firebaseapp.com",
+        databaseURL: "https://hava-recipe.firebaseio.com",
+        projectId: "hava-recipe",
+        storageBucket: "hava-recipe.appspot.com",
+        messagingSenderId: "190122979219",
+        appId: "1:190122979219:web:2bf4915d4501ba5afe0266",
+        measurementId: "G-M4CBVWWPC2"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
+    </script>
 
 </head>
 
@@ -349,8 +371,8 @@
                                 <h3>Subscribe</h3>
                                 <div class="subscribe_form">
                                         <form class="subscribe_form">
-                                                <input name="EMAIL" id="subs-email" class="form_input" placeholder="Email Address..." type="email">
-                                                <button type="submit" class="submit">SUBSCRIBE</button>
+                                                <input name="EMAIL" id="subs_email" class="form_input" placeholder="Email Address..." type="email">
+                                                <button type="submit" class="submit" onclick="subscribe()" >SUBSCRIBE</button>
                                                 <div class="clearfix"></div>
                                         </form>
                                 </div>
@@ -393,5 +415,23 @@
    <script src="js/script.js"></script>
    <script src="js/gallery.js"></script>
 </body>
+<script>
+    var databaseRef = firebase.database().ref('subscriber/');
+    function subscribe(){
+            var subs_email = document.getElementById('subs_email').value;
+            var subs = firebase.database().ref().child('subscriber').push().key;
+        var data = {
+            subs_email: subs_email
+        }
+        var updates = {};
+        updates['/subscriber/' + subs] = data;
+        firebase.database().ref().update(updates);
+        alert('Subscriber has been added');
+        reload_page();
+        }
+        function reload_page(){
+            window.location.reload();
+        }
+</script>
 
 </html>

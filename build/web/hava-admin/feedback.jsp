@@ -82,6 +82,9 @@ font-size: 16px;"> Last access : 30 May 2014 &nbsp; <a href="#" class="btn btn-d
           <li>
             <a href="feedback.jsp" class="active-menu"><i class="fa fa-qrcode fa-3x"></i> Feedback</a>
           </li>
+            <li>
+              <a href="subscriber.jsp"><i class="fa fa-table fa-3x"></i> Subscriber</a>
+          </li>
         </ul>
       </div>
     </nav>

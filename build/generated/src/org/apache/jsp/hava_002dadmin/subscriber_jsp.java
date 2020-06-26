@@ -4,7 +4,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.jsp.*;
 
-public final class user_005fdata_jsp extends org.apache.jasper.runtime.HttpJspBase
+public final class subscriber_jsp extends org.apache.jasper.runtime.HttpJspBase
     implements org.apache.jasper.runtime.JspSourceDependent {
 
   private static final JspFactory _jspxFactory = JspFactory.getDefaultFactory();
@@ -139,23 +139,22 @@ public final class user_005fdata_jsp extends org.apache.jasper.runtime.HttpJspBa
       out.write("        </div>\n");
       out.write("        <!-- End Header  -->\n");
       out.write("        <hr />\n");
-      out.write("\n");
+      out.write("        \n");
       out.write("        <!-- Start Table -->\n");
       out.write("        <div class=\"row\">\n");
       out.write("          <div class=\"col-md-12\">\n");
       out.write("            <!-- Advanced Tables -->\n");
       out.write("            <div class=\"panel panel-default\">\n");
       out.write("              <div class=\"panel-heading\">\n");
-      out.write("                User Table\n");
+      out.write("                Subscriber Table\n");
       out.write("              </div>\n");
       out.write("              <div class=\"panel-body\">\n");
       out.write("                <div class=\"table-responsive\">\n");
-      out.write("                  <table class=\"table table-striped table-bordered table-hover\" id=\"tb_users\">\n");
+      out.write("                  <table class=\"table table-striped table-bordered table-hover\" id=\"tb_subscriber\">\n");
       out.write("                    <thead>\n");
       out.write("                      <tr>\n");
       out.write("                        <th>No</th>\n");
-      out.write("                        <th>username</th>\n");
-      out.write("                        <th>password</th>\n");
+      out.write("                        <th>email</th>\n");
       out.write("                      </tr>\n");
       out.write("                    </thead>\n");
       out.write("                    <tbody>                \n");
@@ -171,6 +170,11 @@ public final class user_005fdata_jsp extends org.apache.jasper.runtime.HttpJspBa
       out.write("\n");
       out.write("          </div>\n");
       out.write("        </div>\n");
+      out.write("        \n");
+      out.write("        \n");
+      out.write("        \n");
+      out.write("        \n");
+      out.write("        \n");
       out.write("      </div>\n");
       out.write("\n");
       out.write("    </div>\n");
@@ -191,8 +195,10 @@ public final class user_005fdata_jsp extends org.apache.jasper.runtime.HttpJspBa
       out.write("  <script src=\"assets/js/dataTables/jquery.dataTables.js\"></script>\n");
       out.write("  <script src=\"assets/js/dataTables/dataTables.bootstrap.js\"></script>\n");
       out.write("  <script>\n");
-      out.write("    var tbFeedback = document.getElementById('tb_users');\n");
-      out.write("    var databaseRef = firebase.database().ref('users/');\n");
+      out.write("    \n");
+      out.write("    \n");
+      out.write("    var tbSubscriber = document.getElementById('tb_subscriber');\n");
+      out.write("    var databaseRef = firebase.database().ref('subscriber/');\n");
       out.write("    var rowIndex = 1;\n");
       out.write("\n");
       out.write("    databaseRef.once('value', function(snapshot) {\n");
@@ -200,17 +206,15 @@ public final class user_005fdata_jsp extends org.apache.jasper.runtime.HttpJspBa
       out.write("    var childKey = childSnapshot.key;\n");
       out.write("    var childData = childSnapshot.val();\n");
       out.write("\n");
-      out.write("    var row = tbFeedback.insertRow(rowIndex);\n");
+      out.write("    var row = tbSubscriber.insertRow(rowIndex);\n");
       out.write("    var cellId = row.insertCell(0);\n");
-      out.write("    var cellUsername = row.insertCell(1);\n");
-      out.write("    var cellPassword = row.insertCell(2);\n");
+      out.write("    var cellSubscriber = row.insertCell(1);\n");
       out.write("    cellId.appendChild(document.createTextNode(childKey));\n");
-      out.write("    cellUsername.appendChild(document.createTextNode(childData.username));\n");
-      out.write("    cellPassword.appendChild(document.createTextNode(childData.password));\n");
+      out.write("    cellSubscriber.appendChild(document.createTextNode(childData.subscriber));\n");
       out.write("    rowIndex = rowIndex + 1;\n");
       out.write("    });\n");
       out.write("\n");
-      out.write("    var table = document.getElementById(\"tb_users\");\n");
+      out.write("    var table = document.getElementById(\"tb_subscriber\");\n");
       out.write("    var rows = table.getElementsByTagName(\"tr\");\n");
       out.write("    for (i = 0; i < rows.length; i++) {\n");
       out.write("            var currentRow = table.rows[i];\n");
@@ -218,13 +222,10 @@ public final class user_005fdata_jsp extends org.apache.jasper.runtime.HttpJspBa
       out.write("                    return function() {\n");
       out.write("                            var cell1 = row.getElementsByTagName(\"td\")[0];\n");
       out.write("                            var cell2 = row.getElementsByTagName(\"td\")[1];\n");
-      out.write("                            var cell3 = row.getElementsByTagName(\"td\")[2];\n");
-      out.write("                            var upk = cell1.innerHTML;\n");
-      out.write("                            var username = cell2.innerHTML;\n");
-      out.write("                            var password = cell3.innerHTML;\n");
-      out.write("                            document.getElementById('upk').value = upk;\n");
-      out.write("                            document.getElementById('username').value = username;\n");
-      out.write("                            document.getElementById('password').value = password;\n");
+      out.write("                            var subs = cell1.innerHTML;\n");
+      out.write("                            var email = cell2.innerHTML;\n");
+      out.write("                            document.getElementById('subs').value = subs;\n");
+      out.write("                            document.getElementById('email').value = email;\n");
       out.write("                    };\n");
       out.write("            };\n");
       out.write("            currentRow.onclick = createClickHandler(currentRow);\n");

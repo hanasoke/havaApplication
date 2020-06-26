@@ -83,6 +83,9 @@ font-size: 16px;"> Last access : 30 May 2014 &nbsp; <a href="#" class="btn btn-d
           <li>
               <a href="feedback.jsp"><i class="fa fa-qrcode fa-3x"></i> Testimonial</a>
           </li>
+            <li>
+              <a href="subscriber.jsp"><i class="fa fa-table fa-3x"></i> Subscriber</a>
+          </li>
         </ul>
       </div>
     </nav>
@@ -119,9 +122,7 @@ font-size: 16px;"> Last access : 30 May 2014 &nbsp; <a href="#" class="btn btn-d
                         <th>password</th>
                       </tr>
                     </thead>
-                    <tbody>
-                        
-                        
+                    <tbody>                
                         
                         
                     </tbody>
@@ -133,11 +134,13 @@ font-size: 16px;"> Last access : 30 May 2014 &nbsp; <a href="#" class="btn btn-d
             <!--End Tables -->
 
           </div>
-        </div>
+        </div>        
       </div>
 
     </div>
     <!-- /. PAGE INNER  -->
+    
+    
   </div>
   <!-- /. PAGE WRAPPER  -->
   <!-- /. WRAPPER  -->

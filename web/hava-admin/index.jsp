@@ -22,9 +22,30 @@
   <link href="assets/css/custom.css" rel="stylesheet" />
   <!-- GOOGLE FONTS-->
   <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-analytics.js"></script>
+
+    <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyAEJ-yMYB6RY8wqisHbrmculO2K8NiTSCQ",
+        authDomain: "hava-recipe.firebaseapp.com",
+        databaseURL: "https://hava-recipe.firebaseio.com",
+        projectId: "hava-recipe",
+        storageBucket: "hava-recipe.appspot.com",
+        messagingSenderId: "190122979219",
+        appId: "1:190122979219:web:2bf4915d4501ba5afe0266",
+        measurementId: "G-M4CBVWWPC2"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
+    </script>
 </head>
 
-<body>
+  <body id="admin">
   <div id="wrapper">
     <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0">
       <div class="navbar-header">

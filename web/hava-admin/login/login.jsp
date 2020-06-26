@@ -70,7 +70,7 @@
                     <div class="text-center">
                       <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                     </div>
-                    <form class="user">
+                      <form class="user" id="user_div">
                       <div class="form-group">
                           <input type="username" class="form-control form-control-user" id="username" placeholder="Enter Username">
                       </div>
@@ -78,7 +78,7 @@
                         <input type="password" class="form-control form-control-user" id="password"
                           placeholder="Password">
                       </div>
-                      <button value="Save" onclick="save_user()" class="btn btn-primary btn-user btn-block">Login</button>
+                      <button onclick="login()" class="btn btn-primary btn-user btn-block">Login</button>
       
                     </form>
                     <hr>
@@ -109,23 +109,31 @@
     <script src="../assets/js/sb-admin-2.min.js"></script>
     
     <script>
-    var databaseRef = firebase.database().ref('users/');
-    function save_user(){
-            var username = document.getElementById('username').value;
-            var password = document.getElementById('password').value;
-            var upk = firebase.database().ref().child('users').push().key;
-        var data = {
-            username: username,
-            password: password
-        }
-        var updates = {};
-        updates['/users/' + upk] = data;
-        firebase.database().ref().update(updates);
-        alert('user has been added');
-        reload_page();
-        }
-        function reload_page(){
-            window.location.reload();
+        
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+              // User is signed in.
+              
+              document.getElementById("user_div").location.href = '../index.jsp';
+            } else {
+              // No user is signed in.
+//              document.getElementById("user_div").location.href = 'login.jsp';
+              
+            }
+        });
+        
+        
+        function login(){
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+            
+            firebase.auth().createUserWithEmailAndPassword(username, password).catch(function(error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            
+            alert("Error : " +errorMessage)
+            });
         }
     </script>
     
