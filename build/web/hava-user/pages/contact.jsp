@@ -203,8 +203,8 @@
                                     <h3>Subscribe</h3>
                                     <div class="subscribe_form">
                                             <form class="subscribe_form">
-                                                    <input name="EMAIL" id="subs-email" class="form_input" placeholder="Email Address..." type="email">
-                                                    <button type="submit" class="submit">SUBSCRIBE</button>
+                                                    <input name="EMAIL" id="subs_email" class="form_input" placeholder="Email Address..." type="email">
+                                                    <button type="submit" class="submit" onclick="subscribe()" >SUBSCRIBE</button>
                                                     <div class="clearfix"></div>
                                             </form>
                                     </div>
@@ -289,6 +289,24 @@
                             .openOn(map);
             }
             map.on('click', onMapClick);
+            
+            
+            var databaseRef = firebase.database().ref('subscriber/');
+            function subscribe(){
+                var subs_email = document.getElementById('subs_email').value;
+                var subs = firebase.database().ref().child('subscriber').push().key;
+            var data = {
+                subs_email: subs_email
+            }
+            var updates = {};
+            updates['/subscriber/' + subs] = data;
+            firebase.database().ref().update(updates);
+            alert('Subscriber has been added');
+            reload_page();
+            }
+            function reload_page(){
+                window.location.reload();
+            }
     </script>
 
 

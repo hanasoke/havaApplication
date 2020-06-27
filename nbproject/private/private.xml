@@ -3,9 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/laragon/www/HavaApplication/web/hava-admin/user_data.jsp</file>
-            <file>file:/C:/laragon/www/HavaApplication/web/hava-admin/subscriber.jsp</file>
-            <file>file:/C:/laragon/www/HavaApplication/web/hava-admin/feedback.jsp</file>
+            <file>file:/C:/laragon/www/HavaApplication/web/hava-user/pages/recipes.jsp</file>
+            <file>file:/C:/laragon/www/HavaApplication/web/hava-user/pages/contact.jsp</file>
+            <file>file:/C:/laragon/www/HavaApplication/web/hava-user/pages/about.jsp</file>
+            <file>file:/C:/laragon/www/HavaApplication/web/hava-user/index.jsp</file>
         </group>
     </open-files>
 </project-private>
