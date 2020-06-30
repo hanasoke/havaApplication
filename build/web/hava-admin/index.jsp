@@ -26,6 +26,7 @@
     <script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-auth.js"></script>
 
     <script>
       // Your web app's Firebase configuration
@@ -45,7 +46,7 @@
     </script>
 </head>
 
-  <body id="admin">
+  <body id="admin" style="margin-top: -20px;">
   <div id="wrapper">
     <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0">
       <div class="navbar-header">
@@ -58,7 +59,7 @@
         <a class="navbar-brand" href="index.html">Admin</a>
       </div>
       <div style="color: white; padding: 15px 50px 5px 50px; float: right; font-size: 16px;">
-        <a href="#" class="btn btn-danger square-btn-adjust">Logout</a>
+          <button type="button" class="btn btn-danger square-btn-adjust" onclick="signOut()">Logout</button>
       </div>
     </nav>
     <!-- Start Navbar  -->
@@ -75,7 +76,10 @@
             <a href="user_data.jsp"><i class="fa fa-table fa-3x"></i> User Data</a>
           </li>
           <li>
-            <a href="feedback.jsp"><i class="fa fa-qrcode fa-3x"></i> Testimonial</a>
+              <a href="feedback.jsp"><i class="fa fa-qrcode fa-3x"></i> Feedback</a>
+          </li>
+          <li>
+              <a href="subscriber.jsp"><i class="fa fa-table fa-3x"></i> Subscriber</a>
           </li>
         </ul>
       </div>
@@ -87,7 +91,7 @@
         <div class="row">
           <div class="col-md-12">
             <h2>Admin Dashboard</h2>
-            <h5>Welcome Hanas , Love to see you back. </h5>
+            <h5>Welcome Admin , Love to see you back. </h5>
           </div>
         </div>
 
@@ -196,6 +200,34 @@
   <!-- MORRIS CHART SCRIPTS -->
   <script src="assets/js/morris/raphael-2.1.0.min.js"></script>
   <script src="assets/js/morris/morris.js"></script>
+  
+  <script>
+      
+      const auth = firebase.auth();
+      
+      function signOut(){
+          auth.signOut();
+          alert("Signed Out");
+          window.location.href = "login/loginAdmin.jsp";
+      }
+      
+      auth.onAuthStateChanged(function(user) {
+          
+         if (user) {
+            
+            var email = user.email;
+//            alert("Active User " + email);
+            
+//            is signed in
+    
+        } else {
+            
+//            no user is signed in
+            
+        }
+          
+      });
+  </script>
 
 
 </body>

@@ -49,7 +49,7 @@
 </head>
 
 <body>
-  <div id="wrapper">
+  <div id="wrapper" style="margin-top: -20px;">
     <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
@@ -74,7 +74,7 @@ font-size: 16px;"> Last access : 30 May 2014 &nbsp; <a href="#" class="btn btn-d
             <img src="assets/img/find_user.png" class="user-image img-responsive" />
           </li>
           <li>
-            <a href="index.html"><i class="fa fa-dashboard fa-3x"></i> Dashboard</a>
+            <a href="index.jsp"><i class="fa fa-dashboard fa-3x"></i> Dashboard</a>
           </li>
           <li>
             <a href="user_data.jsp"><i class="fa fa-table fa-3x"></i> User Data</a>
@@ -82,8 +82,8 @@ font-size: 16px;"> Last access : 30 May 2014 &nbsp; <a href="#" class="btn btn-d
           <li>
             <a href="feedback.jsp" class="active-menu"><i class="fa fa-qrcode fa-3x"></i> Feedback</a>
           </li>
-            <li>
-              <a href="subscriber.jsp"><i class="fa fa-table fa-3x"></i> Subscriber</a>
+          <li>
+            <a href="subscriber.jsp"><i class="fa fa-table fa-3x"></i> Subscriber</a>
           </li>
         </ul>
       </div>

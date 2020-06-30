@@ -72,7 +72,7 @@
                         <input type="password" class="form-control form-control-user" id="password" placeholder="Enter Password">
                       </div>
                     </div>
-                    <button value="Save" onclick="save_user()" class="btn btn-primary btn-user btn-block">Login</button>                
+                    <button value="Save" onclick="signUp()" class="btn btn-primary btn-user btn-block">Login</button>                
               </form>
               <hr>
               <div class="text-center">

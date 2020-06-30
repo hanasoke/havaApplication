@@ -49,7 +49,7 @@
 </head>
 
 <body>
-  <div id="wrapper">
+  <div id="wrapper"  style="margin-top: -20px;">
     <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
@@ -75,13 +75,13 @@ font-size: 16px;"> Last access : 30 May 2014 &nbsp; <a href="#" class="btn btn-d
           </li>
 
           <li>
-            <a href="index.html"><i class="fa fa-dashboard fa-3x"></i> Dashboard</a>
+            <a href="index.jsp"><i class="fa fa-dashboard fa-3x"></i> Dashboard</a>
           </li>
           <li>
             <a class="active-menu" href="table.html"><i class="fa fa-table fa-3x"></i> User Data</a>
           </li>
           <li>
-              <a href="feedback.jsp"><i class="fa fa-qrcode fa-3x"></i> Testimonial</a>
+              <a href="feedback.jsp"><i class="fa fa-qrcode fa-3x"></i> Feedback</a>
           </li>
             <li>
               <a href="subscriber.jsp"><i class="fa fa-table fa-3x"></i> Subscriber</a>
