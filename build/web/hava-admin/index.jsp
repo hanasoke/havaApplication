@@ -56,7 +56,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="index.html">Admin</a>
+        <a class="navbar-brand" href="#">Admin</a>
       </div>
       <div style="color: white; padding: 15px 50px 5px 50px; float: right; font-size: 16px;">
           <button type="button" class="btn btn-danger square-btn-adjust" onclick="signOut()">Logout</button>
@@ -91,7 +91,7 @@
         <div class="row">
           <div class="col-md-12">
             <h2>Admin Dashboard</h2>
-            <h5>Welcome Admin , Love to see you back. </h5>
+            <h5>Welcome Admin, Love to see you back. </h5>
           </div>
         </div>
 
@@ -134,7 +134,55 @@
         </div>
         <!-- End Card  -->
         <hr />
-
+        
+        <!-- Form Elements -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Form Admin
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3>Admin Hava Recipe <a href="crud/addFoods.jsp" class="btn btn-success">Tambah Baru</a></h3>
+                        <form role="form">
+                            <div class="form-group">
+                                <label>ID</label>
+                                <input class="form-control" placeholder="ID" id="fid" readonly/>
+                            </div>
+                            <div class="form-group">
+                                <label for="menu">Menu</label>
+                                <input type="text" class="form-control" placeholder="Enter Menu" id="menu"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="category">Category</label>
+                                <select id="category" class="form-control">
+                                    <option value="">Select Category</option>
+                                    <option value="food">Food</option>
+                                    <option value="drink">Drink</option>
+                                    <option value="tucker">Tucker</option>
+                                </select>                                
+                            </div>
+                            <div class="form-group">
+                                <label for="description">Description</label>
+                                <textarea class="form-control" id="description" rows="3"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="img">Image</label>
+                                <input type="file" class="form-control" placeholder="Enter Menu" id="img"/>
+                            </div>
+                            <div class="form-group">
+                                <button type="button" onclick="updateFood();" class="btn btn-success">Update Food</button>
+                                <button type="button" onclick="deleteFood();" class="btn btn-danger">Delete Food</button>
+                            </div>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+        </div>
+         End Form Elements 
+        
+        
+        <!--Start Table-->
         <div class="row">
           <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="panel panel-default">
@@ -143,40 +191,18 @@
               </div>
               <div class="panel-body">
                 <div class="table-responsive">
-                  <table class="table table-striped table-bordered table-hover">
+                  <table class="table table-striped table-bordered table-hover" id="tb_foods">
                     <thead>
                       <tr>
                         <th>No</th>
                         <th>Menu</th>
                         <th>Category</th>
-                        <th>Preparation Time</th>
-                        <th>Cooking Time</th>
-                        <th>Bahan</th>
-                        <th>Cara Membuat</th>
+                        <th>Description</th>
                         <th>Gambar</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td>Sushi Goreng</td>
-                        <td>Makanan</td>
-                        <td>5 Minutes</td>
-                        <td>40 Minutes</td>
-                        <td>Join Table</td>
-                        <td>Join Table</td>
-                        <td>sushi.png</td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td>Sushi Goreng</td>
-                        <td>Makanan</td>
-                        <td>5 Minutes</td>
-                        <td>40 Minutes</td>
-                        <td>Join Table</td>
-                        <td>Join Table</td>
-                        <td>sushi.png</td>
-                      </tr>
+                      
                     </tbody>
                   </table>
                 </div>
@@ -213,20 +239,98 @@
       
       auth.onAuthStateChanged(function(user) {
           
-         if (user) {
-            
+         if (user) {            
             var email = user.email;
 //            alert("Active User " + email);
             
-//            is signed in
-    
+//            is signed in    
         } else {
             
-//            no user is signed in
-            
-        }
-          
+//            no user is signed in            
+        }          
       });
+      
+        var tbSubscriber = document.getElementById('tb_foods');
+        var databaseRef = firebase.database().ref('foods/');
+        var rowIndex = 1;
+
+        databaseRef.once('value', function(snapshot) {
+                snapshot.forEach(function(childSnapshot) {
+        var childKey = childSnapshot.key;
+        var childData = childSnapshot.val();
+
+        var row = tbSubscriber.insertRow(rowIndex);
+        var cellId = row.insertCell(0);
+        var cellMenu = row.insertCell(1);
+        var cellCategory = row.insertCell(2);
+        var cellDescription = row.insertCell(3);
+        var cellImg = row.insertCell(4);
+        cellId.appendChild(document.createTextNode(childKey));
+        cellMenu.appendChild(document.createTextNode(childData.menu));
+        cellCategory.appendChild(document.createTextNode(childData.category));
+        cellDescription.appendChild(document.createTextNode(childData.description));
+        cellImg.appendChild(document.createTextNode(childData.img));
+        rowIndex = rowIndex + 1;
+        });
+
+        var table = document.getElementById("tb_foods");
+        var rows = table.getElementsByTagName("tr");
+        for (i = 0; i < rows.length; i++) {
+                var currentRow = table.rows[i];
+                var createClickHandler = function(row) {
+                        return function() {
+                                var cell0 = row.getElementsByTagName("td")[0];
+                                var cell1 = row.getElementsByTagName("td")[1];
+                                var cell2 = row.getElementsByTagName("td")[2];
+                                var cell3 = row.getElementsByTagName("td")[3];
+                                var cell4 = row.getElementsByTagName("td")[4];
+                                var fid = cell0.innerHTML;
+                                var menu = cell1.innerHTML;
+                                var category = cell2.innerHTML;
+                                var description = cell3.innerHTML;
+                                var img = cell4.innerHTML;
+                                document.getElementById('fid').value = fid;
+                                document.getElementById('menu').value = menu;
+                                document.getElementById('category').value = category;
+                                document.getElementById('description').value = description;
+                                document.getElementById('img').value = img;
+                        };
+                };
+                currentRow.onclick = createClickHandler(currentRow);
+                }
+        });
+        
+//         function update_user(){
+//    	var upk = document.getElementById('upk').value;
+//    	var username = document.getElementById('username').value;
+//    	var password = document.getElementById('password').value;
+//    	
+//    	var data = {
+//    			username: username,
+//    			password: password
+//    			
+//    	}
+//    	
+//    	var updates = {};
+//    	updates['/users/' + upk] = data;
+//    	firebase.database().ref().update(updates);
+//    	
+//    	alert('admin updated successfully!');
+//    	
+//    	reload_page();
+//    }
+//    
+//    function delete_user(){
+//    	var upk = document.getElementById('upk').value;
+//    	
+//    	firebase.database().ref().child('/users/' + upk).remove();
+//    	alert('admin deleted successfully!');
+//    	reload_page();
+//    }
+//    
+//    function reload_page(){
+//    	window.location.reload();
+//    }
   </script>
 
 

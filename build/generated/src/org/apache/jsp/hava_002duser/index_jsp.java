@@ -410,8 +410,8 @@ public final class index_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                                <h3>Subscribe</h3>\n");
       out.write("                                <div class=\"subscribe_form\">\n");
       out.write("                                        <form class=\"subscribe_form\">\n");
-      out.write("                                                <input name=\"EMAIL\" id=\"subs-email\" class=\"form_input\" placeholder=\"Email Address...\" type=\"email\">\n");
-      out.write("                                                <button type=\"submit\" class=\"submit\">SUBSCRIBE</button>\n");
+      out.write("                                                <input name=\"EMAIL\" id=\"subs_email\" class=\"form_input\" placeholder=\"Email Address...\" type=\"email\">\n");
+      out.write("                                                <button type=\"submit\" class=\"submit\" onclick=\"subscribe()\" >SUBSCRIBE</button>\n");
       out.write("                                                <div class=\"clearfix\"></div>\n");
       out.write("                                        </form>\n");
       out.write("                                </div>\n");
@@ -454,6 +454,24 @@ public final class index_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("   <script src=\"js/script.js\"></script>\n");
       out.write("   <script src=\"js/gallery.js\"></script>\n");
       out.write("</body>\n");
+      out.write("<script>\n");
+      out.write("    var databaseRef = firebase.database().ref('subscriber/');\n");
+      out.write("    function subscribe(){\n");
+      out.write("            var subs_email = document.getElementById('subs_email').value;\n");
+      out.write("            var subs = firebase.database().ref().child('subscriber').push().key;\n");
+      out.write("        var data = {\n");
+      out.write("            subs_email: subs_email\n");
+      out.write("        }\n");
+      out.write("        var updates = {};\n");
+      out.write("        updates['/subscriber/' + subs] = data;\n");
+      out.write("        firebase.database().ref().update(updates);\n");
+      out.write("        alert('Subscriber has been added');\n");
+      out.write("        reload_page();\n");
+      out.write("        }\n");
+      out.write("        function reload_page(){\n");
+      out.write("            window.location.reload();\n");
+      out.write("        }\n");
+      out.write("</script>\n");
       out.write("\n");
       out.write("</html>\n");
     } catch (Throwable t) {

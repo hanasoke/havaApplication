@@ -83,6 +83,9 @@ font-size: 16px;"> Last access : 30 May 2014 &nbsp; <a href="#" class="btn btn-d
           <li>
               <a href="feedback.jsp"><i class="fa fa-qrcode fa-3x"></i> Feedback</a>
           </li>
+            <li>
+              <a href="subscriber.jsp"><i class="fa fa-table fa-3x"></i> Subscriber</a>
+          </li>
         </ul>
       </div>
     </nav>
@@ -94,48 +97,47 @@ font-size: 16px;"> Last access : 30 May 2014 &nbsp; <a href="#" class="btn btn-d
         <div class="row">
           <div class="col-md-12">
             <h2>User Database</h2>
-            <h5>Welcome Hanas , Love to see you back. </h5>
+            <h5>Welcome Admin , Love to see you back. </h5>
 
           </div>
         </div>
         <!-- End Header  -->
-        <hr />
-        
-                    <!-- Form Elements -->
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Form Admin
-                        </div>
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <h3>Admin Hava Recipe <a href="add_userdata.jsp" class="btn btn-success" >Tambah Baru</a></h3>
-                                    <form role="form">
-                                    	<div class="form-group">
-                                            <label>ID</label>
-                                            <input class="form-control" placeholder="ID" id="upk" readonly/>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Username</label>
-                                            <input class="form-control" placeholder="enter username" id="username"/>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Password</label>
-                                            <input class="form-control" placeholder="enter password" id="password" />
-                                        </div>
-                                        <div class="form-group">
-                                        <input type="button" value="Update" onclick="update_user();"
-                                        class="btn btn-primary"></input>
-                                        <input type="button" value="Delete" onclick="delete_user();"
-                                        class="btn btn-danger"></input>
-                                           
-                                        </div>
-                                         </form>
-                                </div>
+        <hr />       
+        <!-- Form Elements -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Form Admin
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3>Admin Hava Recipe <a href="add_userdata.jsp" class="btn btn-success" >Tambah Baru</a></h3>
+                        <form role="form">
+                            <div class="form-group">
+                                <label>ID</label>
+                                <input class="form-control" placeholder="ID" id="upk" readonly/>
                             </div>
+                            <div class="form-group">
+                                <label>Username</label>
+                                <input class="form-control" placeholder="enter username" id="username"/>
+                            </div>
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input class="form-control" placeholder="enter password" id="password" />
+                            </div>
+                            <div class="form-group">
+                            <input type="button" value="Update" onclick="update_user();"
+                            class="btn btn-primary"></input>
+                            <input type="button" value="Delete" onclick="delete_user();"
+                            class="btn btn-danger"></input>
+
+                            </div>
+                             </form>
                         </div>
                     </div>
-                     <!-- End Form Elements -->
+                </div>
+        </div>
+        <!-- End Form Elements -->
         <!-- Start Table -->
         <div class="row">
           <div class="col-md-12">

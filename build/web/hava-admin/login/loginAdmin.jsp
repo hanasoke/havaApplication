@@ -129,14 +129,8 @@
             var email = user.email;
             alert("Active User " + email);
             window.location.href = "../index.jsp";
-            
-//            is signed in
     
         } else {
-            
-//            alert("No Active User");
-            
-
             
         }
           
