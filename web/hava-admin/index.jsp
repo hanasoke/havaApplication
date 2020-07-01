@@ -27,6 +27,7 @@
     <script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-analytics.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.13.1/firebase-storage.js"></script>
 
     <script>
       // Your web app's Firebase configuration
@@ -168,7 +169,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="img">Image</label>
-                                <input type="file" class="form-control" placeholder="Enter Menu" id="img"/>
+                                <input type="file" class="form-control" placeholder="Enter Menu" id="img" accept="image/png, image/jpg, image/jpeg" />
                             </div>
                             <div class="form-group">
                                 <button type="button" onclick="updateFood();" class="btn btn-success">Update Food</button>
@@ -227,21 +228,40 @@
   <script src="assets/js/morris/raphael-2.1.0.min.js"></script>
   <script src="assets/js/morris/morris.js"></script>
   
+  <!--Sweet Alert-->
+  <script src="assets/js/sweetalert2.all.min.js"></script>
+  
   <script>
       
       const auth = firebase.auth();
       
       function signOut(){
-          auth.signOut();
-          alert("Signed Out");
-          window.location.href = "login/loginAdmin.jsp";
+          Swal.fire({
+                    title: 'Apakah Anda Yakin',
+                    text: 'Ingin Keluar dari Halaman',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Keluar'
+                }).then((result) => {
+                    if(result.value) {
+                        Swal.fire({
+                            title: 'Anda Telah Keluar',
+                            icon: 'success'
+                        });                        
+                        auth.signOut();
+                        document.location.href = "login/loginAdmin.jsp";
+                    }
+                });
+
       }
       
       auth.onAuthStateChanged(function(user) {
           
          if (user) {            
             var email = user.email;
-//            alert("Active User " + email);
+            
             
 //            is signed in    
         } else {
@@ -274,63 +294,78 @@
         });
 
         var table = document.getElementById("tb_foods");
+        
         var rows = table.getElementsByTagName("tr");
         for (i = 0; i < rows.length; i++) {
-                var currentRow = table.rows[i];
-                var createClickHandler = function(row) {
-                        return function() {
-                                var cell0 = row.getElementsByTagName("td")[0];
-                                var cell1 = row.getElementsByTagName("td")[1];
-                                var cell2 = row.getElementsByTagName("td")[2];
-                                var cell3 = row.getElementsByTagName("td")[3];
-                                var cell4 = row.getElementsByTagName("td")[4];
-                                var fid = cell0.innerHTML;
-                                var menu = cell1.innerHTML;
-                                var category = cell2.innerHTML;
-                                var description = cell3.innerHTML;
-                                var img = cell4.innerHTML;
-                                document.getElementById('fid').value = fid;
-                                document.getElementById('menu').value = menu;
-                                document.getElementById('category').value = category;
-                                document.getElementById('description').value = description;
-                                document.getElementById('img').value = img;
-                        };
+            var currentRow = table.rows[i];
+            var createClickHandler = function(row) {
+                return function() {
+                    var cell0 = row.getElementsByTagName("td")[0];
+                    var cell1 = row.getElementsByTagName("td")[1];
+                    var cell2 = row.getElementsByTagName("td")[2];
+                    var cell3 = row.getElementsByTagName("td")[3];
+                    var cell4 = row.getElementsByTagName("td")[4];
+                    var fid = cell0.innerHTML;
+                    var menu = cell1.innerHTML;
+                    var category = cell2.innerHTML;
+                    var description = cell3.innerHTML;
+                    var img = cell4.innerHTML;
+                    document.getElementById('fid').value = fid;
+                    document.getElementById('menu').value = menu;
+                    document.getElementById('category').value = category;
+                    document.getElementById('description').value = description;
+                    document.getElementById('img').value = img;
                 };
-                currentRow.onclick = createClickHandler(currentRow);
-                }
+            };
+            currentRow.onclick = createClickHandler(currentRow);
+            }
         });
         
-//         function update_user(){
-//    	var upk = document.getElementById('upk').value;
-//    	var username = document.getElementById('username').value;
-//    	var password = document.getElementById('password').value;
-//    	
-//    	var data = {
-//    			username: username,
-//    			password: password
-//    			
-//    	}
-//    	
-//    	var updates = {};
-//    	updates['/users/' + upk] = data;
-//    	firebase.database().ref().update(updates);
-//    	
-//    	alert('admin updated successfully!');
-//    	
-//    	reload_page();
-//    }
-//    
-//    function delete_user(){
-//    	var upk = document.getElementById('upk').value;
-//    	
-//    	firebase.database().ref().child('/users/' + upk).remove();
-//    	alert('admin deleted successfully!');
-//    	reload_page();
-//    }
-//    
-//    function reload_page(){
-//    	window.location.reload();
-//    }
+        function updateFood(){
+            const file = document.querySelector('input[type="file"]').files[0];
+            const storage = firebase.storage();
+            const pathReference = storage.ref('images/');
+
+            const metadata = {contentType: 'image/jpeg'};
+            const uploadTask = pathReference.child(file.name).put(file, metadata);
+            uploadTask
+                    .then(snapshot => snapshot.ref.getDownloadURL())
+                    .then((url) =>{console.log(url)
+                                document.querySelector('input[type="file"]').src = url;
+                            }).catch (console.error);
+            var fid = document.getElementById('fid').value;
+            var menu = document.getElementById('menu').value;
+            var category = document.getElementById('category').value;
+            var description = document.getElementById('description').value;
+            var img = file.name;
+
+            var data = {
+                menu: menu,
+                category: category,
+                description: description,
+                img: img		
+            }
+
+            var updates = {};
+            updates['/foods/' + fid] = data;
+            firebase.database().ref().update(updates);
+
+            alert('admin updated successfully!');
+
+            reload_page();
+        }
+    
+        function deleteFood(){
+            var upk = document.getElementById('fid').value;
+
+            firebase.database().ref().child('/foods/' + upk).remove();
+            alert('admin deleted successfully!');
+            reload_page();
+        }
+    
+        function reload_page(){
+            window.location.reload();
+        }
   </script>
 
 

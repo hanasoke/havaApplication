@@ -91,6 +91,9 @@
   <!-- Custom scripts for all pages-->
   <script src="../assets/js/sb-admin-2.min.js"></script>
   
+  <!--Sweet Alert-->
+  <script src="../assets/js/sweetalert2.all.min.js"></script>
+  
   <script>
       
       const auth = firebase.auth();
@@ -103,10 +106,16 @@
           const promise = auth.createUserWithEmailAndPassword(email.value, password.value);
           promise.catch (e => alert(e.message));
           
-          alert("The Account Has Been Created");
           
-          window.location.href="loginAdmin.jsp";
-        
+          Swal.fire({
+                title: 'The Account Has Been Created',
+                icon: 'success',
+                confirmButtonColor: ' #2ecc71 '
+            }).then((result) => {
+                if(result.value) {
+                    document.location.href = "loginAdmin.jsp"
+                }
+            });
       }
     
   </script>

@@ -27,6 +27,7 @@
     <script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-analytics.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.13.1/firebase-storage.js"></script>
 
     <script>
       // Your web app's Firebase configuration
@@ -118,7 +119,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="img">Image</label>
-                                <input type="file" class="form-control" placeholder="Enter Menu" id="img"/>
+                                <input type="file" class="form-control" placeholder="Enter Menu" id="img" accept="image/png, image/jpg, image/jpeg"/>
                             </div>
                             <div class="form-group">
                                 <button type="button" onclick="addFoods();" class="btn btn-primary btn-lg btn-block">Add Food</button>
@@ -146,31 +147,76 @@
   <script src="../assets/js/morris/raphael-2.1.0.min.js"></script>
   <script src="../assets/js/morris/morris.js"></script>
   
+  <!--Sweet Alert-->
+  <script src="../assets/js/sweetalert2.all.min.js"></script>
+  
   <script>
     var databaseRef = firebase.database().ref('foods/');
     function addFoods(){
+        
+        const file = document.querySelector('input[type="file"]').files[0];
+        const storage = firebase.storage();
+        const pathReference = storage.ref('images/');
+        
+        const metadata = {contentType: 'image/jpeg'};
+        const uploadTask = pathReference.child(file.name).put(file, metadata);
+        uploadTask
+                .then(snapshot => snapshot.ref.getDownloadURL())
+                .then((url) =>{console.log(url)
+                            document.querySelector('input[type="file"]').src = url;
+                        }).catch (console.error);
+        
         var menu = document.getElementById('menu').value;
         var category = document.getElementById('category').value;
         var description = document.getElementById('description').value;
-        var img = document.getElementById('img').value;
+        var img = file.name;
         var fid = firebase.database().ref().child('foods').push().key;
         
-        var data = {
-        menu: menu,
-        category: category,
-        description: description,
-        img: img
-        }
+        if(menu != "" && category != "" && description != "") {
+            var updates = {};
+            var data = {
+                menu: menu,
+                category: category,
+                description: description,
+                img: img
+            }
         
-        var updates = {};
-        updates['/foods/' +fid] = data;
-        firebase.database().ref().update(updates);
-        alert('Food created successfully!');
-        reload_page();
-        window.location.href = "../index.jsp";
-    }
-    function reload_page(){
-    window.location.reload();
+            updates['/foods/' +fid] = data;
+            firebase.database().ref().update(updates);
+            Swal.fire({
+                title: 'You have added Food',
+                icon: 'success',
+                confirmButtonColor: ' #2ecc71 '
+            }).then((result) => {
+                if(result.value) {
+                    document.location.href = "../index.jsp"
+                }
+            });
+        }
+        else if(menu == "" && category != "" && description != "") {
+            Swal.fire({
+                    title: 'Anda belum mengisi Menu Makanan',
+                    text: 'Menu Makanan wajib diisi',
+                    icon: 'error',
+                    confirmButtonColor: '#3085d6'
+                });
+        }
+        else if(menu != "" && category == "" && description != "") {
+            Swal.fire({
+                    title: 'Anda Belum memili kategori makanan',
+                    text: 'Kategori Makanan wajib diisi',
+                    icon: 'error',
+                    confirmButtonColor: '#3085d6'
+                });
+        }
+        else if(menu != "" && category != "" && description == "") {
+            Swal.fire({
+                    title: 'Anda Belum mengisi Deskripsi Makanan',
+                    text: 'Deskripsi Makanan wajib diisi',
+                    icon: 'error',
+                    confirmButtonColor: '#3085d6'
+                });
+        }
     }
   </script>
 

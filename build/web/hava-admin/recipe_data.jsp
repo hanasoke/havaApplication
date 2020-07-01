@@ -58,12 +58,9 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="index.html">Hava Admin</a>
+        <a class="navbar-brand" href="index.jsp">Hava Admin</a>
       </div>
-      <div style="color: white;
-padding: 15px 50px 5px 50px;
-float: right;
-font-size: 16px;"> Last access : 30 May 2014 &nbsp; <a href="#" class="btn btn-danger square-btn-adjust">Logout</a>
+      <div style="color: white; padding: 15px 50px 5px 50px; float: right; font-size: 16px;"> Last access : 30 May 2014 &nbsp; <a href="#" class="btn btn-danger square-btn-adjust">Logout</a>
       </div>
     </nav>
     <!-- Start Navbar  -->
@@ -111,26 +108,24 @@ font-size: 16px;"> Last access : 30 May 2014 &nbsp; <a href="#" class="btn btn-d
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-6">
-                        <h3>Admin Hava Recipe <a href="add_userdata.jsp" class="btn btn-success" >Tambah Baru</a></h3>
+                        <h3>Admin Hava Recipe <a href="crud/addUser.jsp" class="btn btn-success" >Tambah Baru</a></h3>
                         <form role="form">
                             <div class="form-group">
                                 <label>ID</label>
-                                <input class="form-control" placeholder="ID" id="upk" readonly/>
+                                <input class="form-control" placeholder="ID" id="rid" readonly/>
                             </div>
                             <div class="form-group">
-                                <label>Username</label>
-                                <input class="form-control" placeholder="enter username" id="username"/>
+                                <select id="kode_menu" class="form-control">
+                                    <option value="">Pilih Dosen</option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label>Password</label>
-                                <input class="form-control" placeholder="enter password" id="password" />
+                                <input class="form-control" type="password" placeholder="enter password" id="password" />
                             </div>
                             <div class="form-group">
-                            <input type="button" value="Update" onclick="update_user();"
-                            class="btn btn-primary"></input>
-                            <input type="button" value="Delete" onclick="delete_user();"
-                            class="btn btn-danger"></input>
-
+                                <button type="button" onclick="update_user();" class="btn btn-primary">Update</button>
+                                <button type="button" onclick="delete_user();" class="btn btn-danger">Delete</button>
                             </div>
                              </form>
                         </div>
@@ -188,6 +183,10 @@ font-size: 16px;"> Last access : 30 May 2014 &nbsp; <a href="#" class="btn btn-d
   <!-- DATA TABLE SCRIPTS -->
   <script src="assets/js/dataTables/jquery.dataTables.js"></script>
   <script src="assets/js/dataTables/dataTables.bootstrap.js"></script>
+  
+  <!--Sweet Alert-->
+  <script src="assets/js/sweetalert2.all.min.js"></script>
+    
   <script>
     var tbFeedback = document.getElementById('tb_users');
     var databaseRef = firebase.database().ref('users/');
@@ -195,18 +194,18 @@ font-size: 16px;"> Last access : 30 May 2014 &nbsp; <a href="#" class="btn btn-d
 
     databaseRef.once('value', function(snapshot) {
             snapshot.forEach(function(childSnapshot) {
-    var childKey = childSnapshot.key;
-    var childData = childSnapshot.val();
+                var childKey = childSnapshot.key;
+                var childData = childSnapshot.val();
 
-    var row = tbFeedback.insertRow(rowIndex);
-    var cellId = row.insertCell(0);
-    var cellUsername = row.insertCell(1);
-    var cellPassword = row.insertCell(2);
-    cellId.appendChild(document.createTextNode(childKey));
-    cellUsername.appendChild(document.createTextNode(childData.username));
-    cellPassword.appendChild(document.createTextNode(childData.password));
-    rowIndex = rowIndex + 1;
-    });
+                var row = tbFeedback.insertRow(rowIndex);
+                var cellId = row.insertCell(0);
+                var cellUsername = row.insertCell(1);
+                var cellPassword = row.insertCell(2);
+                cellId.appendChild(document.createTextNode(childKey));
+                cellUsername.appendChild(document.createTextNode(childData.username));
+                cellPassword.appendChild(document.createTextNode(childData.password));
+                rowIndex = rowIndex + 1;
+        });
 
     var table = document.getElementById("tb_users");
     var rows = table.getElementsByTagName("tr");
@@ -235,8 +234,8 @@ font-size: 16px;"> Last access : 30 May 2014 &nbsp; <a href="#" class="btn btn-d
     	var password = document.getElementById('password').value;
     	
     	var data = {
-    			username: username,
-    			password: password
+                    username: username,
+                    password: password
     			
     	}
     	
@@ -244,21 +243,45 @@ font-size: 16px;"> Last access : 30 May 2014 &nbsp; <a href="#" class="btn btn-d
     	updates['/users/' + upk] = data;
     	firebase.database().ref().update(updates);
     	
-    	alert('admin updated successfully!');
-    	
-    	reload_page();
+    	Swal.fire({
+                    title: 'Anda sudah mengupdate pengguna',
+                    icon: 'success',
+                    confirmButtonColor: '#2ecc71'
+                }).then((result) => {
+                    if(result.value) {
+                        reload_page();
+                    }
+                });
     }
     
     function delete_user(){
-    	var upk = document.getElementById('upk').value;
-    	
-    	firebase.database().ref().child('/users/' + upk).remove();
-    	alert('admin deleted successfully!');
-    	reload_page();
+        var upk = document.getElementById('upk').value;
+
+        firebase.database().ref().child('/users/' + upk).remove();
+        
+                Swal.fire({
+                    title: 'Apakah Anda Yakin',
+                    text: 'Data User akan dihapus',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Hapus Data'
+                }).then((result) => {
+                    if(result.value) {
+                        Swal.fire({
+                            title: 'Anda sudah menghapus',
+                            text: 'User',
+                            icon: 'success'
+                        });                        
+                        reload_page();                        
+                    }
+                });
+        
     }
     
     function reload_page(){
-    	window.location.reload();
+        window.location.reload();
     }
     
   </script>

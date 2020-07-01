@@ -109,6 +109,9 @@
     <!-- Custom scripts for all pages-->
     <script src="../assets/js/sb-admin-2.min.js"></script>
     
+    <!--Sweet Alert-->
+  <script src="../assets/js/sweetalert2.all.min.js"></script>
+    
     <script>
         
         const auth = firebase.auth();
@@ -120,21 +123,32 @@
             const promise = auth.signInWithEmailAndPassword(email.value, password.value);
             promise.catch (e => alert(e.message));
             
-        }
-        
-        auth.onAuthStateChanged(function(user) {
+            auth.onAuthStateChanged(function(user) {
           
-         if (user) {
+         if (user != "") {
             
             var email = user.email;
-            alert("Active User " + email);
-            window.location.href = "../index.jsp";
+            var password = user.password;
+            Swal.fire({
+                    title: 'Akun anda adalah',
+                    text: email,
+                    icon: 'success',
+                    confirmButtonColor: '#2ecc71'
+                }).then((result) => {
+                    if(result.value) {
+                        window.location.href = "../index.jsp";
+                    }
+                });
     
         } else {
             
         }
           
       });
+            
+        }
+        
+        
     </script>
     
   </body>
