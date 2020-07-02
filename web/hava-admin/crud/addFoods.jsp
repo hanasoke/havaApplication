@@ -197,7 +197,7 @@
             Swal.fire({
                     title: 'Anda belum mengisi Menu Makanan',
                     text: 'Menu Makanan wajib diisi',
-                    icon: 'error',
+                    icon: 'info',
                     confirmButtonColor: '#3085d6'
                 });
         }
@@ -205,7 +205,7 @@
             Swal.fire({
                     title: 'Anda Belum memili kategori makanan',
                     text: 'Kategori Makanan wajib diisi',
-                    icon: 'error',
+                    icon: 'info',
                     confirmButtonColor: '#3085d6'
                 });
         }

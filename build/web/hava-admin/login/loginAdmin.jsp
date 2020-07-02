@@ -24,29 +24,6 @@
     rel="stylesheet">
     <!-- Custom styles for this template-->
     <link href="../assets/css/sb-admin-2.min.css" rel="stylesheet">
-    
-    <!-- The core Firebase JS SDK is always required and must be listed first -->
-    <script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-database.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-analytics.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-auth.js"></script>
-
-    <script>
-      // Your web app's Firebase configuration
-      var firebaseConfig = {
-        apiKey: "AIzaSyAEJ-yMYB6RY8wqisHbrmculO2K8NiTSCQ",
-        authDomain: "hava-recipe.firebaseapp.com",
-        databaseURL: "https://hava-recipe.firebaseio.com",
-        projectId: "hava-recipe",
-        storageBucket: "hava-recipe.appspot.com",
-        messagingSenderId: "190122979219",
-        appId: "1:190122979219:web:2bf4915d4501ba5afe0266",
-        measurementId: "G-M4CBVWWPC2"
-      };
-      // Initialize Firebase
-      firebase.initializeApp(firebaseConfig);
-      firebase.analytics();
-    </script>
    
     
  </head>
@@ -69,11 +46,11 @@
                 <div class="col-lg-6">
                   <div class="p-5">
                     <div class="text-center">
-                      <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                      <h1 class="h4 text-gray-900 mb-4">Welcome Back Admin</h1>
                     </div>
-                      <form class="user" id="user_div">
+                      <form class="user">
                       <div class="form-group">
-                          <input type="email" class="form-control form-control-user" id="email" placeholder="Enter Email">
+                          <input type="text" class="form-control form-control-user" id="username" placeholder="Enter Username">
                       </div>
                       <div class="form-group">
                         <input type="password" class="form-control form-control-user" id="password"
@@ -82,10 +59,6 @@
                           <button type="button" onclick="login()" class="btn btn-primary btn-user btn-block">Login</button>
       
                     </form>
-                    <hr>
-                    <div class="text-center">
-                      <a class="small" href="registerAdmin.jsp">Create an Account!</a>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -110,42 +83,71 @@
     <script src="../assets/js/sb-admin-2.min.js"></script>
     
     <!--Sweet Alert-->
-  <script src="../assets/js/sweetalert2.all.min.js"></script>
+    <script src="../assets/js/sweetalert2.all.min.js"></script>
     
     <script>
         
-        const auth = firebase.auth();
         
-        function login() {
-            var email = document.getElementById("email");
-            var password = document.getElementById("password");
-            
-            const promise = auth.signInWithEmailAndPassword(email.value, password.value);
-            promise.catch (e => alert(e.message));
-            
-            auth.onAuthStateChanged(function(user) {
-          
-         if (user != "") {
-            
-            var email = user.email;
-            var password = user.password;
-            Swal.fire({
-                    title: 'Akun anda adalah',
-                    text: email,
-                    icon: 'success',
-                    confirmButtonColor: '#2ecc71'
-                }).then((result) => {
-                    if(result.value) {
-                        window.location.href = "../index.jsp";
-                    }
-                });
     
-        } else {
+        function login() {
+            const username = document.getElementById("username").value;
+            const password = document.getElementById('password').value;
+            if(username == 'Admin' && password == 'Admin') { 
+                const Toast = Swal.mixin({
+                  toast: true,
+                  position: 'top-end',
+                  showConfirmButton: false,
+                  timer: 2000,
+                  timerProgressBar: true,
+                  onOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer);
+                    toast.addEventListener('mouseleave', Swal.resumeTimer);
+                    document.location.href = "../index.jsp";
+                  }
+                });
+
+                Toast.fire({
+                  icon: 'success',
+                  title: 'Anda Adalah Admin',
+                });
+                
+            }
             
-        }
-          
-      });
+            else if(username == "" && password != "") {
+                Swal.fire({
+                    title: 'Username kosong',
+                    text: 'Username wajib diisi',
+                    icon: 'failed',
+                    confirmButtonColor: '#2ecc71'
+                });
+            }
             
+            else if(username != "" && password == "") {
+                Swal.fire({
+                    title: 'Password kosong',
+                    text: 'Password wajib diisi',
+                    icon: 'failed',
+                    confirmButtonColor: '#2ecc71'
+                });
+            }
+            
+            else if(username != "Admin" && password == "Admin") {
+                Swal.fire({
+                    title: 'Anda Bukan Admin',
+                    icon: 'warning',
+                    confirmButtonColor: '#2ecc71'
+                });
+            }
+            
+        
+            else {
+                Swal.fire({
+                    title: 'Data kosong',
+                    text: 'Data wajib diisi',
+                    icon: 'failed',
+                    confirmButtonColor: '#2ecc71'
+                });
+            }
         }
         
         

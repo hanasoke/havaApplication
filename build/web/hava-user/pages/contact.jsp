@@ -40,8 +40,8 @@
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-database.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-firestone.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-auth.js"></script>
 
     <script>
         // Your web app's Firebase configuration
@@ -243,6 +243,10 @@
     <script src="../js/jquery.superslides.min.js"></script>
 
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+    
+    <!--Sweet Alert-->
+    <script src="../js/sweetalert2.all.min.js"></script>
+    
     <script>
         var databaseRef = firebase.database().ref('feedback/');
         function save_feedback(){
@@ -260,8 +264,12 @@
             var updates = {};
             updates['/feedback/' + nerm] = data;
             firebase.database().ref().update(updates);
-            alert('feedback has been added');
-            reload_page();
+            Swal.fire({
+                title: 'Terima kasih atas masukannya',
+                icon: 'success',
+                confirmButtonColor: ' #2ecc71 '
+            });
+                reload_page();
         }
             function reload_page(){
             window.location.reload();
@@ -295,18 +303,28 @@
             function subscribe(){
                 var subs_email = document.getElementById('subs_email').value;
                 var subs = firebase.database().ref().child('subscriber').push().key;
-            var data = {
-                subs_email: subs_email
-            }
-            var updates = {};
-            updates['/subscriber/' + subs] = data;
-            firebase.database().ref().update(updates);
-            alert('Subscriber has been added');
-            reload_page();
+            if(subs_email != ""){
+                var data = {
+                    subs_email: subs_email
+                }
+                var updates = {};
+                updates['/subscriber/' + subs] = data;
+                firebase.database().ref().update(updates);
+                Swal.fire({
+                    title: 'Terima kasih sudah mau berlangganan',
+                    icon: 'success',
+                });
+                reload_page();
+            } else {
+                Swal.fire({
+                    title: 'Alamat Email wajib diisi',
+                    icon: 'info'
+                });
             }
             function reload_page(){
                 window.location.reload();
             }
+        }
     </script>
 
 

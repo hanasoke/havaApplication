@@ -453,6 +453,10 @@ public final class index_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("   <script src=\"js/custom.js\"></script>\n");
       out.write("   <script src=\"js/script.js\"></script>\n");
       out.write("   <script src=\"js/gallery.js\"></script>\n");
+      out.write("   \n");
+      out.write("   <!--Sweet Alert-->\n");
+      out.write("    <script src=\"../assets/js/sweetalert2.all.min.js\"></script>\n");
+      out.write("    \n");
       out.write("</body>\n");
       out.write("<script>\n");
       out.write("    var databaseRef = firebase.database().ref('subscriber/');\n");

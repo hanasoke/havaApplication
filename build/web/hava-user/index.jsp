@@ -38,6 +38,7 @@
     <script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-auth.js"></script>
 
     <script>
       // Your web app's Firebase configuration
@@ -76,6 +77,7 @@
                                 <li class="nav-item"><a class="nav-link" href="pages/recipes.jsp">Recipes</a></li>
                                 <li class="nav-item"><a class="nav-link" href="pages/about.jsp">About Us</a></li>
                                 <li class="nav-item"><a class="nav-link" href="pages/contact.jsp">Contact</a></li>
+                                <button type="button" class="btn btn-light" onclick="signOut()">Logout</button>
                         </ul>
                 </div>
             </div>
@@ -414,24 +416,71 @@
    <script src="js/custom.js"></script>
    <script src="js/script.js"></script>
    <script src="js/gallery.js"></script>
+   
+   <!--Sweet Alert-->
+    <script src="js/sweetalert2.all.min.js"></script>
+    
 </body>
 <script>
+    const auth = firebase.auth();
+      
+      function signOut(){
+          Swal.fire({
+                    title: 'Apakah Anda Yakin',
+                    text: 'Ingin Keluar dari Halaman',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Keluar'
+                }).then((result) => {
+                    if(result.value) {                        
+                        auth.signOut();
+                        document.location.href = "../hava-admin/login/loginUser.jsp";
+                    }
+                });
+
+      }
+      
+      auth.onAuthStateChanged(function(user) {
+          
+         if (user) {            
+            var email = user.email;            
+//            is signed in    
+        } else {            
+//            no user is signed in            
+        }          
+      });
+      
     var databaseRef = firebase.database().ref('subscriber/');
     function subscribe(){
             var subs_email = document.getElementById('subs_email').value;
             var subs = firebase.database().ref().child('subscriber').push().key;
-        var data = {
-            subs_email: subs_email
+            
+            if(subs_email != ""){
+                var data = {
+                    subs_email: subs_email
+                }
+                var updates = {};
+                updates['/subscriber/' + subs] = data;
+                firebase.database().ref().update(updates);
+                Swal.fire({
+                    title: 'Terima kasih sudah mau berlangganan',
+                    icon: 'success',
+                });
+                reload_page();
+            } else {
+                Swal.fire({
+                    title: 'Alamat Email wajib diisi',
+                    icon: 'info'
+                });
+            }
+            function reload_page(){
+                    window.location.reload();
+                }
         }
-        var updates = {};
-        updates['/subscriber/' + subs] = data;
-        firebase.database().ref().update(updates);
-        alert('Subscriber has been added');
-        reload_page();
-        }
-        function reload_page(){
-            window.location.reload();
-        }
+            
+
 </script>
 
 </html>

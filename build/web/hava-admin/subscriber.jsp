@@ -76,13 +76,13 @@
             <a href="index.jsp"><i class="fa fa-dashboard fa-3x"></i> Dashboard</a>
           </li>
           <li>
-            <a href="user_data.jsp"><i class="fa fa-table fa-3x"></i> User Data</a>
+              <a href="recipe_data.jsp"><i class="fa fa-table fa-3x"></i> Recipes Data</a>
           </li>
           <li>
               <a href="feedback.jsp"><i class="fa fa-qrcode fa-3x"></i> Feedback</a>
           </li>
           <li>
-              <a class="active-menu" href="subscriber.jsp"><i class="fa fa-table fa-3x"></i> Subscriber</a>
+              <a class="active-menu" href="#"><i class="fa fa-table fa-3x"></i> Subscriber</a>
           </li>
         </ul>
       </div>

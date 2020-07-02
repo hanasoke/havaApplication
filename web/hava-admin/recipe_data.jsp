@@ -75,7 +75,7 @@
             <a href="index.jsp"><i class="fa fa-dashboard fa-3x"></i> Dashboard</a>
           </li>
           <li>
-            <a class="active-menu" href="table.html"><i class="fa fa-table fa-3x"></i> User Data</a>
+            <a class="active-menu" href="#"><i class="fa fa-table fa-3x"></i> Recipes Data</a>
           </li>
           <li>
               <a href="feedback.jsp"><i class="fa fa-qrcode fa-3x"></i> Feedback</a>
@@ -108,21 +108,59 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-6">
-                        <h3>Admin Hava Recipe <a href="crud/addUser.jsp" class="btn btn-success" >Tambah Baru</a></h3>
+                        <h3>Admin Hava Recipe <a href="crud/addRecipes.jsp" class="btn btn-success" >Tambah Baru</a></h3>
                         <form role="form">
-                            <div class="form-group">
-                                <label>ID</label>
-                                <input class="form-control" placeholder="ID" id="rid" readonly/>
-                            </div>
-                            <div class="form-group">
-                                <select id="kode_menu" class="form-control">
-                                    <option value="">Pilih Dosen</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Password</label>
-                                <input class="form-control" type="password" placeholder="enter password" id="password" />
-                            </div>
+                            
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="rid" placeholder="ID" readonly></input>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Menu</label>
+                                    <select id="menu" class="form-control">
+                                        <option value="">Choose Food / Drink</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Preparation Time</label>
+                                    <input class="form-control" type="number" placeholder="Preparation Time" id="preparation"  required autocomplete="off" />
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Cooking Time</label>
+                                    <input class="form-control" type="number" placeholder="Cooking Time" id="cooking"  required autocomplete="off" />
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Material 1</label>
+                                    <input class="form-control" type="text" placeholder="material 1 " id="material_1"  required autocomplete="off" />
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Material 2</label>
+                                    <input class="form-control" type="text" placeholder="material 2" id="material_2"  required autocomplete="off" />
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Material 3</label>
+                                    <input class="form-control" type="text" placeholder="material 3" id="material_3"  required autocomplete="off" />
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Step 1</label>
+                                    <input class="form-control" type="text" placeholder="step 1" id="step_1"  required autocomplete="off" />
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Step 2</label>
+                                    <input class="form-control" type="text" placeholder="step 2" id="step_2"  required autocomplete="off" />
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Step 3</label>
+                                    <input class="form-control" type="text" placeholder="step 3" id="step_3"  required autocomplete="off" />
+                                </div>
                             <div class="form-group">
                                 <button type="button" onclick="update_user();" class="btn btn-primary">Update</button>
                                 <button type="button" onclick="delete_user();" class="btn btn-danger">Delete</button>
@@ -143,19 +181,23 @@
               </div>
               <div class="panel-body">
                 <div class="table-responsive">
-                  <table class="table table-striped table-bordered table-hover" id="tb_users">
+                  <table class="table table-striped table-bordered table-hover" id="tb_recipe">
                     <thead>
                       <tr>
                         <th>No</th>
-                        <th>username</th>
-                        <th>password</th>
+                        <th>Menu</th>
+                        <th>Preparation</th>
+                        <th>Cooking</th>
+                        <th>material 1</th>
+                        <th>material 2</th>
+                        <th>material 3</th>
+                        <th>step 1</th>
+                        <th>step 2</th>
+                        <th>step 3</th>
                       </tr>
                     </thead>
                     <tbody>
-                        
-                        
-                        
-                        
+                                               
                     </tbody>
                   </table>
                 </div>
@@ -188,59 +230,126 @@
   <script src="assets/js/sweetalert2.all.min.js"></script>
     
   <script>
-    var tbFeedback = document.getElementById('tb_users');
-    var databaseRef = firebase.database().ref('users/');
-    var rowIndex = 1;
+        var databaseRefMenu = firebase.database().ref('foods/');
+        var rowIndexMenu = 1;
+            
+        databaseRefMenu.once('value', function(snapshot) {
+            snapshot.forEach(function(childSnapshot) {
+                var childData = childSnapshot.val();
+                var x = document.getElementById("menu");
+                var option = document.createElement("option");
+                option.text = childData.menu;
+                option.value = childData.menu;
+                x.add(option);
+                rowIndexMenu = rowIndexMenu + 1;
+            });
+        });
 
-    databaseRef.once('value', function(snapshot) {
+        var tbRecipe = document.getElementById('tb_recipe');
+        var databaseRef = firebase.database().ref('recipes/');
+        var rowIndex = 1;
+        
+        databaseRef.once('value', function(snapshot) {
             snapshot.forEach(function(childSnapshot) {
                 var childKey = childSnapshot.key;
                 var childData = childSnapshot.val();
-
-                var row = tbFeedback.insertRow(rowIndex);
+                var row = tbRecipe.insertRow(rowIndex);
                 var cellId = row.insertCell(0);
-                var cellUsername = row.insertCell(1);
-                var cellPassword = row.insertCell(2);
+                var cellMenu = row.insertCell(1);
+                var cellPreparation = row.insertCell(2);
+                var cellCooking = row.insertCell(3);
+                var cellMaterial_1 = row.insertCell(4);
+                var cellMaterial_2 = row.insertCell(5);
+                var cellMaterial_3 = row.insertCell(6);
+                var cellStep_1 = row.insertCell(7);
+                var cellStep_2 = row.insertCell(8);
+                var cellStep_3 = row.insertCell(9);
                 cellId.appendChild(document.createTextNode(childKey));
-                cellUsername.appendChild(document.createTextNode(childData.username));
-                cellPassword.appendChild(document.createTextNode(childData.password));
+                cellMenu.appendChild(document.createTextNode(childData.menu));
+                cellPreparation.appendChild(document.createTextNode(childData.preparation));
+                cellCooking.appendChild(document.createTextNode(childData.cooking));
+                cellMaterial_1.appendChild(document.createTextNode(childData.material_1));
+                cellMaterial_2.appendChild(document.createTextNode(childData.material_3));
+                cellMaterial_3.appendChild(document.createTextNode(childData.material_3));
+                cellStep_1.appendChild(document.createTextNode(childData.step_1));
+                cellStep_2.appendChild(document.createTextNode(childData.step_2));
+                cellStep_3.appendChild(document.createTextNode(childData.step_3));
                 rowIndex = rowIndex + 1;
-        });
-
-    var table = document.getElementById("tb_users");
-    var rows = table.getElementsByTagName("tr");
-    for (i = 0; i < rows.length; i++) {
-            var currentRow = table.rows[i];
-            var createClickHandler = function(row) {
+                
+                
+            });
+            
+            var table = document.getElementById("tb_recipe");
+            var rows = table.getElementsByTagName("tr");
+            for(i = 0; i < rows.length; i++) {
+                var currentRow = table.rows[i];
+                var createClickHandler = function(row) {
                     return function() {
-                            var cell1 = row.getElementsByTagName("td")[0];
-                            var cell2 = row.getElementsByTagName("td")[1];
-                            var cell3 = row.getElementsByTagName("td")[2];
-                            var upk = cell1.innerHTML;
-                            var username = cell2.innerHTML;
-                            var password = cell3.innerHTML;
-                            document.getElementById('upk').value = upk;
-                            document.getElementById('username').value = username;
-                            document.getElementById('password').value = password;
+                        var cell1 = row.getElementsByTagName("td")[0];
+                        var cell2 = row.getElementsByTagName("td")[1];
+                        var cell3 = row.getElementsByTagName("td")[2];
+                        var cell4 = row.getElementsByTagName("td")[3];
+                        var cell5 = row.getElementsByTagName("td")[4];
+                        var cell6 = row.getElementsByTagName("td")[5];
+                        var cell7 = row.getElementsByTagName("td")[6];
+                        var cell8 = row.getElementsByTagName("td")[7];
+                        var cell9 = row.getElementsByTagName("td")[8];
+                        var cell10 = row.getElementsByTagName("td")[9];
+                        
+                        var id = cell1.innerHTML;
+                        var menu = cell2.innerHTML;
+                        var preparation = cell3.innerHTML;
+                        var cooking = cell4.innerHTML;
+                        var material_1 = cell5.innerHTML;
+                        var material_2 = cell6.innerHTML;
+                        var material_3 = cell7.innerHTML;
+                        var step_1 = cell8.innerHTML;
+                        var step_2 = cell9.innerHTML;
+                        var step_3 = cell10.innerHTML;
+                        document.getElementById('rid').value = id;
+                        document.getElementById('menu').value = menu;
+                        document.getElementById('preparation').value = preparation;
+                        document.getElementById('cooking').value = cooking;
+                        document.getElementById('material_1').value = material_1;
+                        document.getElementById('material_2').value = material_2;
+                        document.getElementById('material_3').value = material_3;
+                        document.getElementById('step_1').value = step_1;
+                        document.getElementById('step_2').value = step_2;
+                        document.getElementById('step_3').value = step_3;
                     };
+                };
+                currentRow.onclick = createClickHandler(currentRow);
             };
-            currentRow.onclick = createClickHandler(currentRow);
-            }
-    });
+           
+        }); 
+            
     
     function update_user(){
-    	var upk = document.getElementById('upk').value;
-    	var username = document.getElementById('username').value;
-    	var password = document.getElementById('password').value;
+    	var menu = document.getElementById('menu').value;
+    	var preparation = document.getElementById('preparation').value;
+                var cooking = document.getElementById('cooking').value;
+                var material_1 = document.getElementById('material_1').value;
+                var material_2 = document.getElementById('material_2').value;
+                var material_3 = document.getElementById('material_3').value;
+                var step_1 = document.getElementById('step_1').value;
+                var step_2 = document.getElementById('step_2').value;
+                var step_3 = document.getElementById('step_3').value;
+                var rid = document.getElementById('rid').value;
     	
     	var data = {
-                    username: username,
-                    password: password
-    			
+                    menu: menu,
+                    preparation: preparation,
+                    cooking: cooking,
+                    material_1: material_1,
+                    material_2: material_2,
+                    material_3: material_3,
+                    step_1:step_1,
+                    step_2:step_2,
+                    step_3:step_3,   			
     	}
     	
     	var updates = {};
-    	updates['/users/' + upk] = data;
+    	updates['/recipes/' + rid] = data;
     	firebase.database().ref().update(updates);
     	
     	Swal.fire({
@@ -255,9 +364,9 @@
     }
     
     function delete_user(){
-        var upk = document.getElementById('upk').value;
+        var rid = document.getElementById('rid').value;
 
-        firebase.database().ref().child('/users/' + upk).remove();
+        firebase.database().ref().child('/recipes/' + rid).remove();
         
                 Swal.fire({
                     title: 'Apakah Anda Yakin',
@@ -273,8 +382,9 @@
                             title: 'Anda sudah menghapus',
                             text: 'User',
                             icon: 'success'
-                        });                        
-                        reload_page();                        
+                        }).then((result) => {
+                            reload_page();
+                        });                                                
                     }
                 });
         

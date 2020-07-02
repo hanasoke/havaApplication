@@ -76,7 +76,7 @@
                 <a href="../index.jsp"><i class="fa fa-dashboard fa-3x"></i> Dashboard</a>
               </li>
               <li>
-                <a class="active-menu" href="../user_data.jsp"><i class="fa fa-table fa-3x"></i> User Data</a>
+                <a class="active-menu" href="#"><i class="fa fa-table fa-3x"></i> Recipes Data</a>
               </li>
               <li>
                   <a href="../feedback.jsp"><i class="fa fa-qrcode fa-3x"></i> Feedback</a>
@@ -95,28 +95,66 @@
             <!-- Form Elements -->
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    User
+                    Resep Makanan dan Minuman
                 </div>
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-md-5">
-                            <h3>User</h3>
+                        <div class="col-md-6">
+                            <h3>Membuat Resep Makanan dan Minuman</h3>
+                            
                             <form role="form">
-
+                                
                                 <div class="form-group">
-                                    <label>Username</label>
-                                    <input class="form-control" type="text" placeholder="enter username" id="username" required autocomplete="off"/>
+                                    <select id="menu" class="form-control">
+                                        <option value="">Choose Food / Drink</option>
+                                    </select>
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Password</label>
-                                    <input class="form-control" type="password" placeholder="enter password" id="password"  required autocomplete="off" />
+                                    <label>Preparation Time</label>
+                                    <input class="form-control" type="number" placeholder="Preparation Time" id="preparation"  required autocomplete="off" />
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Cooking Time</label>
+                                    <input class="form-control" type="number" placeholder="Cooking Time" id="cooking"  required autocomplete="off" />
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Material 1</label>
+                                    <input class="form-control" type="text" placeholder="material 1 " id="material_1"  required autocomplete="off" />
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Material 2</label>
+                                    <input class="form-control" type="text" placeholder="material 2" id="material_2"  required autocomplete="off" />
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Material 3</label>
+                                    <input class="form-control" type="text" placeholder="material 3" id="material_3"  required autocomplete="off" />
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Step 1</label>
+                                    <input class="form-control" type="text" placeholder="step 1" id="step_1"  required autocomplete="off" />
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Step 2</label>
+                                    <input class="form-control" type="text" placeholder="step 2" id="step_2"  required autocomplete="off" />
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Step 3</label>
+                                    <input class="form-control" type="text" placeholder="step 3" id="step_3"  required autocomplete="off" />
                                 </div>
 
                                 <div class="form-group">
-                                    <button type="button" id="saveUser" class="btn btn-warning">Submit</button>
+                                    <button type="button" id="saveRecipe" class="btn btn-warning">Submit</button>
                                 </div>
                             </form>
+                            
                          </div>
                     </div>
                  </div>
@@ -139,53 +177,72 @@
     <!--Sweet Alert-->
     <script src="../assets/js/sweetalert2.all.min.js"></script>
     <script>
-        var databaseRef = firebase.database().ref('users/');
-        if(username != null && password != null) {
+        var databaseRefMenu = firebase.database().ref('foods/');
+            var rowIndexMenu = 1;
             
-        }
+            databaseRefMenu.once('value', function(snapshot) {
+                snapshot.forEach(function(childSnapshot) {
+                    var childData = childSnapshot.val();
+                    var x = document.getElementById("menu");
+                    var option = document.createElement("option");
+                    option.text = childData.menu;
+                    option.value = childData.menu;
+                    x.add(option);
+                    rowIndexMenu = rowIndexMenu + 1;
+                });
+            });
+            
+        var databaseRef = firebase.database().ref('recipes/');
         
-        const saveUser = document.querySelector('#saveUser');
+        const saveUser = document.querySelector('#saveRecipe');
         
         saveUser.addEventListener('click',function(){
-            var username = document.getElementById('username').value;
-            var password = document.getElementById('password').value;
-            var upk = firebase.database().ref().child('users').push().key;
+            var menu = document.getElementById('menu').value;
+            var preparation = document.getElementById('preparation').value;
+            var cooking = document.getElementById('cooking').value;
+            var material_1 = document.getElementById('material_1').value;
+            var material_2 = document.getElementById('material_2').value;
+            var material_3 = document.getElementById('material_3').value;
+            var step_1 = document.getElementById('step_1').value;
+            var step_2 = document.getElementById('step_2').value;
+            var step_3 = document.getElementById('step_3').value;
+            var rid = firebase.database().ref().child('recipes').push().key;
+            
 
-            if (username != "" && password != "" ) {
+            if (menu != "" && preparation != "" && cooking != "" && material_1 != "" && material_2 != ""  && material_3 != "" && step_1 != "" && step_2 != "" && step_3 != "" ) {
                 var updates = {};
                 var data = {
-                    username: username,
-                    password: password
+                    menu: menu,
+                    preparation: preparation,
+                    cooking: cooking,
+                    material_1: material_1,
+                    material_2: material_2,
+                    material_3: material_3,
+                    step_1:step_1,
+                    step_2:step_2,
+                    step_3:step_3
                 }
             
-                updates['/users/' + upk] = data;
+                updates['/recipes/' + rid] = data;
                 firebase.database().ref().update(updates);
                 Swal.fire({
-                    title: 'Anda Sudah Menambahkan Pengguna',
+                    title: 'Anda Sudah Menambahkan Resep',
                     icon: 'success',
                     confirmButtonColor: ' #2ecc71 '
                 }).then((result) => {
                     if(result.value) {
-                        document.location.href = "../user_data.jsp"
+                        document.location.href = "../recipe_data.jsp"
                     }
                 });
             }            
-            else if(username == "" && password != "") {
+            else if(menu == "" && preparation != "" && cooking != "" && material_1 != "" && material_2 != ""  && material_3 != "" && step_1 != "" && step_2 != "" && step_3 != "") {
                 Swal.fire({
-                    title: 'Anda Belum mengisi username',
-                    text: 'username wajib diisi',
+                    title: 'Anda Belum memilih',
+                    text: 'menu wajib dipilih',
                     icon: 'error',
                     confirmButtonColor: '#3085d6'
                 });
-            }            
-            else if(username != "" && password == "") {
-                Swal.fire({
-                    title: 'Anda Belum mengisi password',
-                    text: 'password wajib diisi',
-                    icon: 'error',
-                    confirmButtonColor: '#3085d6'
-                });
-            }            
+            }
             else {
                 Swal.fire({
                     title: 'Anda Belum mengisi data',

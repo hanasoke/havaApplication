@@ -26,8 +26,6 @@
     <script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-analytics.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.13.1/firebase-storage.js"></script>
 
     <script>
       // Your web app's Firebase configuration
@@ -71,10 +69,10 @@
             <img src="assets/img/find_user.png" class="user-image img-responsive" />
           </li>
           <li>
-            <a class="active-menu" href="index.jsp"><i class="fa fa-dashboard fa-3x"></i> Dashboard</a>
+            <a class="active-menu" href="#"><i class="fa fa-dashboard fa-3x"></i> Dashboard</a>
           </li>
           <li>
-            <a href="user_data.jsp"><i class="fa fa-table fa-3x"></i> User Data</a>
+              <a href="recipe_data.jsp"><i class="fa fa-table fa-3x"></i> User Data</a>
           </li>
           <li>
               <a href="feedback.jsp"><i class="fa fa-qrcode fa-3x"></i> Feedback</a>
@@ -245,11 +243,7 @@
                     cancelButtonColor: '#d33',
                     confirmButtonText: 'Keluar'
                 }).then((result) => {
-                    if(result.value) {
-                        Swal.fire({
-                            title: 'Anda Telah Keluar',
-                            icon: 'success'
-                        });                        
+                    if(result.value) {                        
                         auth.signOut();
                         document.location.href = "login/loginAdmin.jsp";
                     }
@@ -350,17 +344,41 @@
             updates['/foods/' + fid] = data;
             firebase.database().ref().update(updates);
 
-            alert('admin updated successfully!');
-
-            reload_page();
+            Swal.fire({
+                    title: 'Anda sudah mengupdate pengguna',
+                    icon: 'success',
+                    confirmButtonColor: '#2ecc71'
+                }).then((result) => {
+                    if(result.value) {
+                        reload_page();
+                    }
+                });
         }
     
         function deleteFood(){
             var upk = document.getElementById('fid').value;
 
             firebase.database().ref().child('/foods/' + upk).remove();
-            alert('admin deleted successfully!');
-            reload_page();
+            
+            Swal.fire({
+                    title: 'Apakah Anda Yakin',
+                    text: 'Data User akan dihapus',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Hapus Data'
+                }).then((result) => {
+                    if(result.value) {
+                        Swal.fire({
+                            title: 'Anda sudah menghapus',
+                            text: 'User',
+                            icon: 'success'
+                        }).then((result) => {
+                            reload_page();
+                        });                                                
+                    }
+                });       
         }
     
         function reload_page(){
