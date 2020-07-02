@@ -234,19 +234,11 @@
                         document.location.href = "../recipe_data.jsp"
                     }
                 });
-            }            
-            else if(menu == "" && preparation != "" && cooking != "" && material_1 != "" && material_2 != ""  && material_3 != "" && step_1 != "" && step_2 != "" && step_3 != "") {
-                Swal.fire({
-                    title: 'Anda Belum memilih',
-                    text: 'menu wajib dipilih',
-                    icon: 'error',
-                    confirmButtonColor: '#3085d6'
-                });
             }
             else {
                 Swal.fire({
-                    title: 'Anda Belum mengisi data',
-                    text: 'data wajib diisi',
+                    title: 'Anda Belum mengisi data dengan lengkap',
+                    text: 'semua data wajib diisi',
                     icon: 'error',
                     confirmButtonColor: '#3085d6'
                 });
