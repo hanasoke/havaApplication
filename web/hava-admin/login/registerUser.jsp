@@ -113,7 +113,7 @@
                 confirmButtonColor: ' #2ecc71 '
             }).then((result) => {
                 if(result.value) {
-                    document.location.href = "loginAdmin.jsp"
+                    document.location.href = "loginUser.jsp"
                 }
             });
       }

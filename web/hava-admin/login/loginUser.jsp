@@ -30,7 +30,7 @@
     <script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-analytics.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-auth.js"></script>
-
+  
     <script>
       // Your web app's Firebase configuration
       var firebaseConfig = {
@@ -128,8 +128,7 @@
           
             if (email != "" && password != "") {
             
-            var email = user.email;
-            var password = user.password;
+            var pengguna = user.email;
                 
             const Toast = Swal.mixin({
               toast: true,
@@ -146,7 +145,7 @@
 
             Toast.fire({
               icon: 'success',
-              title: 'Akun anda adalah ' + email,
+              title: 'Akun anda adalah ' + pengguna,
             });
     
         } else {

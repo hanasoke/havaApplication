@@ -422,7 +422,7 @@
     
 </body>
 <script>
-    const auth = firebase.auth();
+      const auth = firebase.auth();
       
       function signOut(){
           Swal.fire({

@@ -26,6 +26,7 @@
     <script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.13.1/firebase-storage.js"></script>
 
     <script>
       // Your web app's Firebase configuration
@@ -58,7 +59,7 @@
         <a class="navbar-brand" href="#">Admin</a>
       </div>
       <div style="color: white; padding: 15px 50px 5px 50px; float: right; font-size: 16px;">
-          <button type="button" class="btn btn-danger square-btn-adjust" onclick="signOut()">Logout</button>
+          <button type="" class="btn btn-danger square-btn-adjust" onclick="signOut()">Logout</button>
       </div>
     </nav>
     <!-- Start Navbar  -->
@@ -72,7 +73,7 @@
             <a class="active-menu" href="#"><i class="fa fa-dashboard fa-3x"></i> Dashboard</a>
           </li>
           <li>
-              <a href="recipe_data.jsp"><i class="fa fa-table fa-3x"></i> User Data</a>
+              <a href="recipe_data.jsp"><i class="fa fa-table fa-3x"></i> Recipes Data</a>
           </li>
           <li>
               <a href="feedback.jsp"><i class="fa fa-qrcode fa-3x"></i> Feedback</a>
@@ -231,8 +232,6 @@
   
   <script>
       
-      const auth = firebase.auth();
-      
       function signOut(){
           Swal.fire({
                     title: 'Apakah Anda Yakin',
@@ -243,26 +242,12 @@
                     cancelButtonColor: '#d33',
                     confirmButtonText: 'Keluar'
                 }).then((result) => {
-                    if(result.value) {                        
-                        auth.signOut();
+                    if(result.value) {   
                         document.location.href = "login/loginAdmin.jsp";
                     }
                 });
 
       }
-      
-      auth.onAuthStateChanged(function(user) {
-          
-         if (user) {            
-            var email = user.email;
-            
-            
-//            is signed in    
-        } else {
-            
-//            no user is signed in            
-        }          
-      });
       
         var tbSubscriber = document.getElementById('tb_foods');
         var databaseRef = firebase.database().ref('foods/');

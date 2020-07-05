@@ -65,8 +65,6 @@ public final class index_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("    <script src=\"https://www.gstatic.com/firebasejs/7.15.4/firebase-app.js\"></script>\r\n");
       out.write("    <script src=\"https://www.gstatic.com/firebasejs/7.15.4/firebase-database.js\"></script>\r\n");
       out.write("    <script src=\"https://www.gstatic.com/firebasejs/7.15.4/firebase-analytics.js\"></script>\r\n");
-      out.write("    <script src=\"https://www.gstatic.com/firebasejs/7.15.4/firebase-auth.js\"></script>\r\n");
-      out.write("    <script src=\"https://www.gstatic.com/firebasejs/7.13.1/firebase-storage.js\"></script>\r\n");
       out.write("\r\n");
       out.write("    <script>\r\n");
       out.write("      // Your web app's Firebase configuration\r\n");
@@ -272,7 +270,7 @@ public final class index_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("  \r\n");
       out.write("  <script>\r\n");
       out.write("      \r\n");
-      out.write("//      const auth = firebase.auth();\r\n");
+      out.write("      const auth = firebase.auth();\r\n");
       out.write("      \r\n");
       out.write("      function signOut(){\r\n");
       out.write("          Swal.fire({\r\n");
@@ -284,12 +282,8 @@ public final class index_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                    cancelButtonColor: '#d33',\r\n");
       out.write("                    confirmButtonText: 'Keluar'\r\n");
       out.write("                }).then((result) => {\r\n");
-      out.write("                    if(result.value) {\r\n");
-      out.write("                        Swal.fire({\r\n");
-      out.write("                            title: 'Anda Telah Keluar',\r\n");
-      out.write("                            icon: 'success'\r\n");
-      out.write("                        });                        \r\n");
-      out.write("//                        auth.signOut();\r\n");
+      out.write("                    if(result.value) {                        \r\n");
+      out.write("                        auth.signOut();\r\n");
       out.write("                        document.location.href = \"login/loginAdmin.jsp\";\r\n");
       out.write("                    }\r\n");
       out.write("                });\r\n");

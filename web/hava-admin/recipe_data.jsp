@@ -60,7 +60,8 @@
         </button>
         <a class="navbar-brand" href="index.jsp">Hava Admin</a>
       </div>
-      <div style="color: white; padding: 15px 50px 5px 50px; float: right; font-size: 16px;"> Last access : 30 May 2014 &nbsp; <a href="#" class="btn btn-danger square-btn-adjust">Logout</a>
+      <div style="color: white; padding: 15px 50px 5px 50px; float: right; font-size: 16px;"> 
+          <button type="" class="btn btn-danger square-btn-adjust" onclick="signOut()">Logout</button>
       </div>
     </nav>
     <!-- Start Navbar  -->
@@ -230,6 +231,24 @@
   <script src="assets/js/sweetalert2.all.min.js"></script>
     
   <script>
+      
+      function signOut(){
+          Swal.fire({
+                    title: 'Apakah Anda Yakin',
+                    text: 'Ingin Keluar dari Halaman',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Keluar'
+                }).then((result) => {
+                    if(result.value) {   
+                        document.location.href = "login/loginAdmin.jsp";
+                    }
+                });
+
+      }
+      
         var databaseRefMenu = firebase.database().ref('foods/');
         var rowIndexMenu = 1;
             

@@ -78,6 +78,7 @@
                                             <li class="nav-item active"><a class="nav-link" href="recipes.jsp">Recipes</a></li>
                                             <li class="nav-item"><a class="nav-link" href="about.jsp">About Us</a></li>
                                             <li class="nav-item"><a class="nav-link" href="contact.jsp">Contact</a></li>
+                                            <button type="button" class="btn btn-light" onclick="signOut()">Logout</button>
                                     </ul>
                             </div>
                     </div>
@@ -205,6 +206,25 @@
     <script src="../js/sweetalert2.all.min.js"></script>
     
     <script>
+        const auth = firebase.auth();
+        function signOut(){
+          Swal.fire({
+                    title: 'Apakah Anda Yakin',
+                    text: 'Ingin Keluar dari Halaman',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Keluar'
+                }).then((result) => {
+                    if(result.value) {                        
+                        auth.signOut();
+                        document.location.href = "../../hava-admin/login/loginUser.jsp";
+                    }
+                });
+
+      }
+      
         var databaseRef = firebase.database().ref('subscriber/');
         function subscribe(){
                 var subs_email = document.getElementById('subs_email').value;

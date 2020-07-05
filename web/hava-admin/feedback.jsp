@@ -60,10 +60,8 @@
         </button>
         <a class="navbar-brand" href="index.html">Binary admin</a>
       </div>
-      <div style="color: white;
-padding: 15px 50px 5px 50px;
-float: right;
-font-size: 16px;"> Last access : 30 May 2014 &nbsp; <a href="#" class="btn btn-danger square-btn-adjust">Logout</a>
+      <div style="color: white; padding: 15px 50px 5px 50px; float: right; font-size: 16px;"> 
+          <button type="" class="btn btn-danger square-btn-adjust" onclick="signOut()">Logout</button>
       </div>
     </nav>
     <!-- Start Navbar  -->
@@ -77,7 +75,7 @@ font-size: 16px;"> Last access : 30 May 2014 &nbsp; <a href="#" class="btn btn-d
             <a href="index.jsp"><i class="fa fa-dashboard fa-3x"></i> Dashboard</a>
           </li>
           <li>
-              <a href="recipe_data.jsp"><i class="fa fa-table fa-3x"></i> User Data</a>
+              <a href="recipe_data.jsp"><i class="fa fa-table fa-3x"></i> Recipes Data</a>
           </li>
           <li>
             <a href="#" class="active-menu"><i class="fa fa-qrcode fa-3x"></i> Feedback</a>
@@ -105,7 +103,7 @@ font-size: 16px;"> Last access : 30 May 2014 &nbsp; <a href="#" class="btn btn-d
 
         <!-- Start Table  -->
         <div class="row">
-          <div class="col-md-12">
+          <div class="col-md-12 col-sm-12 col-xs-12">
             <!-- Advanced Tables -->
             <div class="panel panel-default">
               <div class="panel-heading">
@@ -151,7 +149,28 @@ font-size: 16px;"> Last access : 30 May 2014 &nbsp; <a href="#" class="btn btn-d
   <!-- DATA TABLE SCRIPTS -->
   <script src="assets/js/dataTables/jquery.dataTables.js"></script>
   <script src="assets/js/dataTables/dataTables.bootstrap.js"></script>
+  
+  <!--Sweet Alert-->
+  <script src="assets/js/sweetalert2.all.min.js"></script>
+    
   <script>
+      
+    function signOut(){
+        Swal.fire({
+                  title: 'Apakah Anda Yakin',
+                  text: 'Ingin Keluar dari Halaman',
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Keluar'
+              }).then((result) => {
+                  if(result.value) {   
+                      document.location.href = "login/loginAdmin.jsp";
+                  }
+              });
+
+    }
     
     var tbFeedback = document.getElementById('tb_feedback');
     var databaseRef = firebase.database().ref('feedback/');
